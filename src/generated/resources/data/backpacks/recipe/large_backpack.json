@@ -1,0 +1,24 @@
+{
+  "type": "backpacks:backpack_upgrade_recipe",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "backpacks:backpack"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "L": {
+      "tag": "c:leathers"
+    }
+  },
+  "pattern": [
+    "LGL",
+    "LBL",
+    "LLL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "backpacks:large_backpack"
+  }
+}

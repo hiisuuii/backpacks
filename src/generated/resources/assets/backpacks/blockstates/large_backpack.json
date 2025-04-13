@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "backpacks:block/large_backpack",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "backpacks:block/large_backpack",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "backpacks:block/large_backpack"
+    },
+    "facing=west": {
+      "model": "backpacks:block/large_backpack",
+      "y": 90
+    }
+  }
+}
