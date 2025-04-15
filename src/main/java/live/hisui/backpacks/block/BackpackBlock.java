@@ -5,13 +5,10 @@ import live.hisui.backpacks.Backpacks;
 import live.hisui.backpacks.block.entity.BackpackBlockEntity;
 import live.hisui.backpacks.block.entity.LargeBackpackBlockEntity;
 import live.hisui.backpacks.compat.curios.CuriosCompat;
-import live.hisui.backpacks.item.BackpackItem;
 import live.hisui.backpacks.util.VoxelShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -28,9 +25,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -104,19 +99,17 @@ public class BackpackBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
+
+        if(!level.isClientSide()) {
             BlockEntity blockentity = level.getBlockEntity(pos);
-            if(player.isShiftKeyDown()){
-                level.playSound(player, pos, SoundEvents.WOOL_BREAK, SoundSource.BLOCKS, 1.0f, 0.8f);
+            if (player.isShiftKeyDown()) {
                 ItemStack stack = this.getDrops(state, new LootParams.Builder((ServerLevel) level)
                         .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
                         .withParameter(LootContextParams.ORIGIN, player.position())
                         .withParameter(LootContextParams.BLOCK_ENTITY, level.getBlockEntity(pos))).getFirst();
-                if(ModList.get().isLoaded("curios")){
-                    if(CuriosCompat.hasOpenBackSlot(player) && CuriosCompat.canEquipBackpack(player, stack)){
-                        if(CuriosCompat.insertIntoBackSlot(player, stack)){
+                if (ModList.get().isLoaded("curios")) {
+                    if (CuriosCompat.hasOpenBackSlot(player) && CuriosCompat.canEquipBackpack(player, stack)) {
+                        if (CuriosCompat.insertIntoBackSlot(player, stack)) {
                             level.destroyBlock(pos, false);
                             return InteractionResult.SUCCESS;
                         } else {
@@ -124,7 +117,7 @@ public class BackpackBlock extends BaseEntityBlock {
                         }
                     }
                 }
-                if(player.getItemBySlot(EquipmentSlot.CHEST).isEmpty() && stack.getItem().canEquip(stack, EquipmentSlot.CHEST, player)){
+                if (player.getItemBySlot(EquipmentSlot.CHEST).isEmpty() && stack.getItem().canEquip(stack, EquipmentSlot.CHEST, player)) {
                     player.setItemSlot(EquipmentSlot.CHEST, stack.copy());
                     stack.shrink(1);
                     level.destroyBlock(pos, false);
@@ -133,13 +126,15 @@ public class BackpackBlock extends BaseEntityBlock {
                 return InteractionResult.PASS;
             } else {
                 if (blockentity instanceof BackpackBlockEntity) {
-                    level.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER.value(), SoundSource.BLOCKS, 1.0f, 0.8f);
                     player.openMenu((BackpackBlockEntity) blockentity);
                 }
             }
-
-            return InteractionResult.CONSUME;
         }
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.CONSUME;
     }
 
     @Nullable

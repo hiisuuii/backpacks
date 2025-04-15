@@ -3,7 +3,6 @@ package live.hisui.backpacks.network;
 import io.netty.buffer.ByteBuf;
 import live.hisui.backpacks.BackpackContainer;
 import live.hisui.backpacks.Backpacks;
-import live.hisui.backpacks.compat.curios.CuriosCompat;
 import live.hisui.backpacks.item.BackpackItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.codec.StreamCodec;
@@ -12,8 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.ModLoader;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.Collections;

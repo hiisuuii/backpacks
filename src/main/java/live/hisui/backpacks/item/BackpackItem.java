@@ -6,13 +6,11 @@ import live.hisui.backpacks.block.BackpackBlock;
 import live.hisui.backpacks.block.entity.BackpackBlockEntity;
 import live.hisui.backpacks.block.entity.LargeBackpackBlockEntity;
 import live.hisui.backpacks.compat.curios.CuriosCompat;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -28,10 +26,7 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.material.FluidState;
 import net.neoforged.fml.ModList;
 
 import java.util.Collections;
@@ -93,7 +88,7 @@ public class BackpackItem extends Item implements Equipable {
                     backpackBlockEntity.setItemsFromContents(Optional.ofNullable(backpack.get(DataComponents.CONTAINER)).orElse(ItemContainerContents.fromItems(Collections.nCopies(27, ItemStack.EMPTY))));
                 }
             }
-            level.playSound(player,pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 1.0f, 0.8f);
+            level.playSound(player,pos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 0.6f);
             if(player == null || !player.isCreative()){
                 backpack.shrink(1);
             }
@@ -120,6 +115,8 @@ public class BackpackItem extends Item implements Equipable {
             // Open the menu
             player.openMenu(getMenuProvider(backpackContainer));
         }
+//        level.playSound(player, BlockPos.containing(player.position()), SoundEvents.LLAMA_CHEST, SoundSource.PLAYERS, 1.0f, 0.8f);
+
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
     }
 

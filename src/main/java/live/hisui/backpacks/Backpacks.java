@@ -21,6 +21,8 @@ import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -71,6 +73,14 @@ public class Backpacks
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Registries.SOUND_EVENT, MODID);
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> BACKPACK_OPEN = SOUND_EVENTS.register(
+            "backpacks.backpack.open", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID, "backpacks.backpack.open"))
+    );
+    public static final DeferredHolder<SoundEvent, SoundEvent> BACKPACK_CLOSE = SOUND_EVENTS.register(
+            "backpacks.backpack.close", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID, "backpacks.backpack.close"))
+    );
 
     public static final DeferredItem<Item> BACKPACK = registerItem("backpack",
             () -> new BackpackItem(new Item.Properties()
@@ -81,10 +91,10 @@ public class Backpacks
 
     public static final DeferredBlock<Block> BACKPACK_BLOCK = BLOCKS.register("backpack", () ->
             new BackpackBlock(BlockBehaviour.Properties.of().strength(0.8f).mapColor(MapColor.COLOR_BROWN)
-                    .sound(SoundType.WOOL)));
+                    .sound(SoundType.SNOW)));
     public static final DeferredBlock<Block> LARGE_BACKPACK_BLOCK = BLOCKS.register("large_backpack", () ->
             new BackpackBlock(BlockBehaviour.Properties.of().strength(0.8f).mapColor(MapColor.COLOR_BROWN)
-                    .sound(SoundType.WOOL)));
+                    .sound(SoundType.SNOW)));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BackpackBlockEntity>> BACKPACK_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register(
             "backpack",() -> BlockEntityType.Builder.of(BackpackBlockEntity::new, Backpacks.BACKPACK_BLOCK.get()).build(null)
     );
@@ -109,6 +119,7 @@ public class Backpacks
         BLOCK_ENTITY_TYPES.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         RECIPES.register(modEventBus);
+        SOUND_EVENTS.register(modEventBus);
 
         modEventBus.addListener(DataGenerators::gatherData);
         if(ModList.get().isLoaded("curios")){

@@ -2,7 +2,6 @@ package live.hisui.backpacks.compat.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import live.hisui.backpacks.Backpacks;
 import live.hisui.backpacks.item.BackpackItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;

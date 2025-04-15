@@ -1,5 +1,7 @@
 {
   "item.backpacks.backpack": "Backpack",
   "item.backpacks.large_backpack": "Large Backpack",
-  "key.backpacks.open_backpack": "Open Backpack"
+  "key.backpacks.open_backpack": "Open Backpack",
+  "subtitles.backpack.open": "Backpack opens",
+  "subtitles.backpack.close": "Backpack closes"
 }

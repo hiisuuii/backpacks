@@ -1,0 +1,14 @@
+{
+  "backpacks.backpack.open": {
+    "sounds": [
+      "dig/snow1"
+    ],
+    "subtitle": "subtitles.backpack.open"
+  },
+  "backpacks.backpack.close": {
+    "sounds": [
+      "dig/snow1"
+    ],
+    "subtitle": "subtitles.backpack.close"
+  }
+}
