@@ -13,7 +13,6 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,17 +31,13 @@ public class BackpackUpgradeRecipe extends ShapedRecipe {
         Optional<ItemStack> inputPack = getBackpack(input);
         if(inputPack.isPresent()){
             ItemStack backpackToUpgrade = inputPack.get();
-            BackpackItem backpackType = (BackpackItem) backpackToUpgrade.getItem();
             ItemContainerContents contentsSmall = backpackToUpgrade.get(DataComponents.CONTAINER);
             if(contentsSmall != null) {
 
-                ItemStack[] stacks = new ItemStack[backpackType.getSize()];
-                for (int i = 0; i < contentsSmall.getSlots(); i++) {
-                    stacks[i] = contentsSmall.getStackInSlot(i);
-                }
-                List<ItemStack> stacksLarge = new ArrayList<>(Collections.nCopies(((BackpackItem)result.getItem()).getSize(), ItemStack.EMPTY));
-                for (int i = 0; i < stacks.length; i++) {
-                    stacksLarge.set(i, stacks[i]);
+                List<ItemStack> stacksLarge = new ArrayList<>();
+                for (int i = 0; i < ((BackpackItem)result.getItem()).getSize(); i++) {
+                    ItemStack stack = (i < contentsSmall.getSlots()) ? contentsSmall.getStackInSlot(i) : ItemStack.EMPTY;
+                    stacksLarge.add(stack != null ? stack : ItemStack.EMPTY); // extra safety
                 }
                 ItemContainerContents contentsLarge = ItemContainerContents.fromItems(stacksLarge);
 
