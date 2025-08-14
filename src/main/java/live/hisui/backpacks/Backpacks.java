@@ -42,6 +42,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -122,6 +123,8 @@ public class Backpacks
         if(ModList.get().isLoaded("curios")){
             modEventBus.addListener(CuriosCompat::registerCapabilities);
         }
+
+        modContainer.registerConfig(ModConfig.Type.COMMON, BackpacksConfig.commonSpec);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Backpacks) to respond directly to events.

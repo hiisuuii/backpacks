@@ -47,7 +47,7 @@ public record OpenBackpackPacket() implements CustomPacketPayload {
                 // Create the wrapper container that will save changes back to the item
                 BackpackContainer backpackContainer = new BackpackContainer(size, backpackStack, container);
 
-                player.openMenu(((BackpackItem) backpackStack.getItem()).getMenuProvider(backpackContainer));
+                player.openMenu(((BackpackItem) backpackStack.getItem()).getMenuProvider(backpackContainer, backpackStack));
             }
         });
     }

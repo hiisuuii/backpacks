@@ -1,5 +1,6 @@
 package live.hisui.backpacks.item;
 
+import live.hisui.backpacks.menu.BackpackMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -20,8 +21,8 @@ public class LargeBackpackItem extends BackpackItem{
     }
 
     @Override
-    public MenuProvider getMenuProvider(Container container) {
+    public MenuProvider getMenuProvider(Container container, ItemStack self) {
         return new SimpleMenuProvider(((containerId, playerInventory, player) ->
-                ChestMenu.sixRows(containerId, playerInventory, container)), Component.translatable("item.backpacks.large_backpack"));
+                BackpackMenu.largeBackpack(containerId, playerInventory, container, self)), Component.translatable("item.backpacks.large_backpack"));
     }
 }

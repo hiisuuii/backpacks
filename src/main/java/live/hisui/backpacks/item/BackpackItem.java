@@ -6,6 +6,7 @@ import live.hisui.backpacks.block.BackpackBlock;
 import live.hisui.backpacks.block.entity.BackpackBlockEntity;
 import live.hisui.backpacks.block.entity.LargeBackpackBlockEntity;
 import live.hisui.backpacks.compat.curios.CuriosCompat;
+import live.hisui.backpacks.menu.BackpackMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -18,7 +19,6 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -113,16 +113,16 @@ public class BackpackItem extends Item implements Equipable {
             BackpackContainer backpackContainer = new BackpackContainer(size, usedStack, container);
 
             // Open the menu
-            player.openMenu(getMenuProvider(backpackContainer));
+            player.openMenu(getMenuProvider(backpackContainer, usedStack));
         }
 //        level.playSound(player, BlockPos.containing(player.position()), SoundEvents.LLAMA_CHEST, SoundSource.PLAYERS, 1.0f, 0.8f);
 
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
     }
 
-    public MenuProvider getMenuProvider(Container container){
+    public MenuProvider getMenuProvider(Container container, ItemStack self){
         return new SimpleMenuProvider(((containerId, playerInventory, player) ->
-                ChestMenu.threeRows(containerId, playerInventory, container)), Component.translatable("item.backpacks.backpack"));
+                BackpackMenu.smallBackpack(containerId, playerInventory, container, self)), Component.translatable("item.backpacks.backpack"));
     }
 
     @Override
