@@ -1,5 +1,7 @@
 package live.hisui.backpacks.menu;
 
+import live.hisui.backpacks.Backpacks;
+import live.hisui.backpacks.BackpacksConfig;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ChestMenu;
@@ -27,6 +29,9 @@ public class BackpackMenu extends ChestMenu {
 
     @Override
     protected boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
+        if(!BackpacksConfig.COMMON.backpackNesting.get() && (stack.is(Backpacks.BACKPACK) || stack.is(Backpacks.LARGE_BACKPACK))) {
+            return false;
+        }
         if(ItemStack.isSameItemSameComponents(stack, self)) {
             return false;
         }
