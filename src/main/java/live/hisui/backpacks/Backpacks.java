@@ -47,6 +47,8 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -123,12 +125,20 @@ public class Backpacks
         if(ModList.get().isLoaded("curios")){
             modEventBus.addListener(CuriosCompat::registerCapabilities);
         }
-
         modContainer.registerConfig(ModConfig.Type.COMMON, BackpacksConfig.commonSpec);
 
-        // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (Backpacks) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+    }
+
+
+    @Mod(value = Backpacks.MODID, dist = Dist.CLIENT)
+    public static class BackpacksClient {
+        public BackpacksClient(IEventBus modEventBus, ModContainer modContainer)
+        {
+            modContainer.registerExtensionPoint(IConfigScreenFactory.class,
+                    (container, modListScreen) -> new ConfigurationScreen(
+                            container, modListScreen, ConfigurationScreen.ConfigurationSectionScreen::new
+                    ));
+        }
     }
 
     public static ItemStack findChestBackpack(Player player){
