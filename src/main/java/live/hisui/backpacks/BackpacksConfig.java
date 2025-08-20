@@ -7,7 +7,7 @@ public class BackpacksConfig {
     public static class Common {
         public final ModConfigSpec.BooleanValue backpackNesting;
         Common(ModConfigSpec.Builder builder){
-            backpackNesting = builder.comment("Allow backpacks to be nested inside other backpacks:")
+            backpackNesting = builder.comment("Allow backpacks to be nested inside other backpacks")
                     .define("backpackNesting", true);
         }
     }
